@@ -4,7 +4,7 @@ import mimetypes
 from apiclient import errors
 from apiclient.http import MediaIoBaseUpload
 from functools import wraps
-
+from googleapiclient.http import MediaFileUpload
 from .apiattr import ApiAttribute
 from .apiattr import ApiAttributeMixin
 from .apiattr import ApiResource
@@ -386,7 +386,23 @@ class GoogleDriveFile(ApiAttributeMixin, ApiResource):
       self.uploaded = True
       self.dirty['content'] = False
       self.UpdateMetadata(metadata)
-
+      
+  def get_files_service(self):
+    return self.auth.service.files() 
+  
+  # def _FilesInsertWithProgress(self, file_path, file_name):
+        
+    # media_body = MediaFileUpload(file_path, resumable=True)
+    # body = { 'title': file_name }
+    # file = self.auth.service.files().insert( body=body, media_body=media_body, fields='id, alternateLink, fileSize')
+    # response = None
+    # while response is None:
+    #     status, response = file.next_chunk()
+    #     if status:
+    #         print ("Uploaded %d%%." % int(status.progress() * 100))
+    # if file:
+    #     print(file_name + " uploaded successfully")
+      
   @LoadAuth
   def _FilesUnTrash(self, param=None):
     """Un-delete (Trash) a file using Files.UnTrash().
