@@ -388,8 +388,6 @@ class GoogleDriveFile(ApiAttributeMixin, ApiResource):
       self.UpdateMetadata(metadata)
       
   def get_files_service(self):
-    print("updates test pass")
-    print("updates test pass2")
     return self.auth.service.files() 
   
   # def _FilesInsertWithProgress(self, file_path, file_name):
