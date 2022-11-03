@@ -287,11 +287,17 @@ class GoogleDriveFile(ApiAttributeMixin, ApiResource):
     """
     if self.uploaded or self.get('id') is not None:
       if self.dirty['content']:
+        print('1 s')
         self._FilesUpdate(param=param)
+        print('1 e')
       else:
+        print('2 s')
         self._FilesPatch(param=param)
+        print('2 e')
     else:
+      print('3 s')
       self._FilesInsert(param=param)
+      print('3 e')
 
   def Trash(self, param=None):
     """Move a file to the trash.
