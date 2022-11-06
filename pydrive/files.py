@@ -284,24 +284,14 @@ class GoogleDriveFile(ApiAttributeMixin, ApiResource):
     :param param: additional parameter to upload file.
     :type param: dict.
     :raises: ApiRequestError
-    """
-    try:
-      print("sdfsdfdsfdsfdsfsd")
-      if self.uploaded or self.get('id') is not None:
-        if self.dirty['content']:
-          print('1 s')
-          self._FilesUpdate(param=param)
-          print('1 e')
-        else:
-          print('2 s')
-          self._FilesPatch(param=param)
-          print('2 e')
+  """
+    if self.uploaded or self.get('id') is not None:
+      if self.dirty['content']:
+        self._FilesUpdate(param=param)
       else:
-        print('3 s')
-        self._FilesInsert(param=param)
-        print('3 e')
-    except Exception as error:
-      print(f"Upload error: {error}")
+        self._FilesPatch(param=param)
+    else:
+      self._FilesInsert(param=param)
       
 
   def Trash(self, param=None):
